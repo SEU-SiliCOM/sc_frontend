@@ -15,5 +15,11 @@ npm run serve
 npm run build
 ```
 
+### Deploy
+```
+cd dist
+tcb hosting deploy -r sh -e silicom-3g1n80lk04073434
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

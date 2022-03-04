@@ -1,30 +1,42 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
+  <var-back-top bottom="60px" :duration="300"/>
 </template>
 
+<script>
+  export default {
+    name: "app",
+    beforeCreate() {
+      let token = this.$cookies.get("token")
+      if (!token) {
+        this.$store.commit("initialize")
+      } else {
+        this.$ajax.api.get(
+          "user/user_info/",
+        ).then(res => {
+          if (res.data.code === 107) {
+            this.$store.commit("login", res.data.result.user)
+          } else {
+            this.$tip({
+              content: res.data.msg,
+              type: "warning",
+              duration: 2000,
+            })
+          }
+          this.$store.commit("initialize")
+        }).catch(err => {
+          this.$store.commit("initialize")
+          this.$tip({
+            content: err,
+            type: "error",
+            duration: 2000,
+          })
+        })
+      }
+    },
+  }
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  @import "assets/css/base.css";
 </style>
