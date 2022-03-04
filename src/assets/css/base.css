@@ -56,7 +56,11 @@ a {
     z-index: -1;
 }
 
-
+.card {
+    --card-footer-margin: 0;
+    --card-padding: 0;
+    --card-footer-padding: 0
+}
 
 
 

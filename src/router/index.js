@@ -1,20 +1,61 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import store from "../store/index.js"
 import HomeWrap from "views/home/HomeWrap";
 import HomePage from "views/home/HomePage";
 
 const routes = [
   {
-    path: '',
+    path: "",
     redirect: "/home",
   },
+
   {
-    path: '/home',
-    title: 'Home',
+    path: "/home",
     component: HomeWrap,
     children: [
       {
         path: "",
+        meta: {
+          title: "首页",
+        },
         component: HomePage,
+      },
+    ]
+  },
+
+  {
+    path: "/user",
+    component: () => import("views/user/UserWrap"),
+    children: [
+      {
+        path: "",
+        meta: {
+          title: "用户信息",
+          auth: true
+        },
+        component: () => import("views/user/UserInfo"),
+      },
+      {
+        path: "login",
+        meta: {
+          title: "登录",
+        },
+        component: () => import("views/user/Login"),
+      },
+      {
+        path: "reset-password",
+        meta: {
+          title: "重置密码",
+        },
+        component: () => import("views/user/ResetPassword"),
+      },
+      {
+        path: "change-password",
+        meta: {
+          title: "修改密码",
+          auth: true
+        },
+        component: () => import("views/user/ChangePassword"),
       },
     ]
   },
@@ -29,7 +70,15 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  next()
+  if (to.matched.some(route => route.meta.auth)) {
+    if (!document.cookie.match(/token=(.*?)(;|$)/)) {
+      next({path: "/user/login", query: {next: to.path}})
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 router.return = function (path) {

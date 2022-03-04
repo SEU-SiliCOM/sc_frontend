@@ -1,5 +1,6 @@
 <template>
   <router-view/>
+  <div class="background"/>
   <var-back-top bottom="60px" :duration="300"/>
 </template>
 

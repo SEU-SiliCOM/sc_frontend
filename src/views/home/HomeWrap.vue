@@ -1,7 +1,6 @@
 <template>
   <home-nav-bar/>
-  <div class="background"/>
-  <div class="content-wrap">
+  <div id="content">
     <router-view/>
   </div>
 </template>
@@ -19,15 +18,16 @@
 
 <style scoped>
   @media screen and (min-width: 840px) {
-    .content-wrap {
+    #content {
       width: 56%;
-      margin: 64px auto;
+      margin: 0 auto;
+      padding: 64px 0;
     }
   }
 
   @media screen and (max-width: 840px) {
-    .content-wrap {
-      margin: 98px 0 0;
+    #content {
+      padding: 98px 0 0;
     }
   }
 </style>

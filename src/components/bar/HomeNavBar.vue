@@ -2,12 +2,13 @@
   <div id="nav-bar" class="clear-fix var-elevation--5">
 
     <div id="left">
-      <img id="logo" src="~assets/img/logo.png" alt="">
+      <img id="logo" @click="this.router.replace('/home')"
+           src="https://sc-1304907527.cos.ap-nanjing.myqcloud.com/static/logo128.png" alt="">
     </div>
 
     <var-divider class="divider" vertical/>
 
-    <div id="center">
+    <div id="center" @click="this.$router.replace('/home')">
       <div id="name">
         SILICOM
       </div>
@@ -19,7 +20,7 @@
           inactive-color="#eee"
           active-color="#4ebaee"
           indicator-color="#4ebaee">
-          <var-tab class="tab" :class="{'tab-active':active===0}">首页</var-tab>
+          <var-tab class="tab" :class="{'tab-active':active===0}" @click="this.$router.replace('/home')">首页</var-tab>
           <var-tab class="tab" :class="{'tab-active':active===1}">话题</var-tab>
           <var-tab class="tab" :class="{'tab-active':active===2}">论坛</var-tab>
           <var-tab class="tab" :class="{'tab-active':active===3}">数据</var-tab>
@@ -86,7 +87,7 @@
       <template #right>
         <var-icon style="margin-right: 10px" size="26px" name="magnify"/>
         <var-badge type="danger" dot position="right-top" style="z-index: 100">
-          <var-icon style="margin-right: 10px"  name="message-processing-outline" size="26px"/>
+          <var-icon style="margin-right: 10px" name="message-processing-outline" size="26px"/>
         </var-badge>
       </template>
     </var-app-bar>
@@ -115,9 +116,7 @@
     },
     data() {
       return {
-        value: null,
-        show_user_info: false,
-        show_login_popup: false
+        value: ""
       }
     },
     computed: {
@@ -127,14 +126,10 @@
     }, methods: {
       avatar_click() {
         if (this.$store.state.is_login) {
-          this.show_user_info = !this.show_user_info
+          this.$router.push("/user/")
         } else {
-          this.$router.push("/login?next=/home")
+          this.$router.push("/user/login?next=/home")
         }
-      },
-      logout() {
-        this.$cookies.remove("token")
-        this.$store.commit("logout")
       }
     }
   }
@@ -186,8 +181,9 @@
 
     #logo {
       float: right;
-      height: 30px;
-      margin: 17px 2%;
+      height: 47px;
+      margin: 10px 2%;
+      cursor: pointer;
     }
 
     #name {
@@ -196,6 +192,7 @@
       margin: 0 5% 0 1%;
       font-weight: bold;
       color: white;
+      cursor: pointer;
     }
 
     #option {
