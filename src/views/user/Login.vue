@@ -1,4 +1,18 @@
 <template>
+  <var-app-bar id="pe-nav-bar" title-position="center" color="#2b2b2b" title="登陆">
+    <template #left>
+      <var-button
+        round
+        text
+        color="transparent"
+        text-color="#ffffff"
+        @click="this.$router.return('/home')"
+      >
+        <var-icon name="chevron-left" :size="24"/>
+      </var-button>
+    </template>
+  </var-app-bar>
+
   <div id="wrap">
     <var-image id="logo" src="https://sc-1304907527.cos.ap-nanjing.myqcloud.com/static/logo256.png"/>
     <var-divider>
@@ -136,7 +150,7 @@
         })
       },
       resetPassword() {
-        this.$router.push({path: "/reset-password", query: {next: this.$route.query.next}})
+        this.$router.push({path: "/user/reset-password", query: {next: this.$route.query.next}})
       },
       phone_toggle() {
         this.clear()
@@ -162,6 +176,10 @@
 
 <style scoped>
   @media screen and (min-width: 840px) {
+    #pe-nav-bar {
+      display: none;
+    }
+
     #wrap {
       width: 350px;
       margin: 50px auto;
@@ -192,7 +210,29 @@
   }
 
   @media screen and (max-width: 840px) {
+    #pe-nav-bar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+    }
 
+    #wrap {
+      margin: 20px;
+    }
+
+    #card {
+      padding: 20px;
+    }
+
+    #logo {
+      width: 100px;
+      margin: 20px auto;
+    }
+
+    #register {
+      margin: 20px 0;
+    }
   }
 
 </style>

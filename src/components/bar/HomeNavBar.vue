@@ -2,7 +2,7 @@
   <div id="nav-bar" class="clear-fix var-elevation--5">
 
     <div id="left">
-      <img id="logo" @click="this.router.replace('/home')"
+      <img id="logo" @click="this.$router.replace('/home')"
            src="https://sc-1304907527.cos.ap-nanjing.myqcloud.com/static/logo128.png" alt="">
     </div>
 

@@ -1,5 +1,4 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import store from "../store/index.js"
 import HomeWrap from "views/home/HomeWrap";
 import HomePage from "views/home/HomePage";
 
@@ -20,6 +19,13 @@ const routes = [
         },
         component: HomePage,
       },
+      {
+        path: "404",
+        meta: {
+          title: "页面不见了",
+        },
+        component: () => import("views/home/NotFound")
+      }
     ]
   },
 
@@ -59,6 +65,11 @@ const routes = [
       },
     ]
   },
+
+  {
+    path: '/:pathMatch(.*)',
+    redirect: "/home/404"
+  }
 ]
 
 const router = createRouter({

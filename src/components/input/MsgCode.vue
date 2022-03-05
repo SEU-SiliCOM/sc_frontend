@@ -10,7 +10,7 @@
           @change="$emit('update:code',code)"
         />
       </var-col>
-      <var-col :span="8" :offset="2">
+      <var-col :span="10">
         <div style="margin: 10px 0 0;">
           <var-button v-show="is_send" block disabled type="info">{{t}}s</var-button>
           <var-button v-show="!is_send" block type="info" @click="getCode">获取验证码</var-button>

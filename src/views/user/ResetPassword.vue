@@ -1,33 +1,50 @@
 <template>
+  <var-app-bar id="pe-nav-bar" title-position="center" color="#2b2b2b" title="忘记密码">
+    <template #left>
+      <var-button
+        round
+        text
+        color="transparent"
+        text-color="#ffffff"
+        @click="this.$router.return('/home')"
+      >
+        <var-icon name="chevron-left" :size="24"/>
+      </var-button>
+    </template>
+  </var-app-bar>
 
-  <div id="step-wrap">
-    <var-steps :active="active">
-      <var-step>确认账号</var-step>
-      <var-step>重置密码</var-step>
-      <var-step>重置成功</var-step>
-    </var-steps>
-  </div>
+  <div id="wrap">
+    <var-image id="logo" src="https://sc-1304907527.cos.ap-nanjing.myqcloud.com/static/logo256.png"/>
 
-  <div id="input-wrap">
-    <div v-if="active===0">
-      <phone v-model:phone="phone"/>
-      <msg-code v-model:code="code" method="reset_password" :phone="phone"/>
+    <div id="step-wrap">
+      <var-steps :active="active">
+        <var-step>确认账号</var-step>
+        <var-step>重置密码</var-step>
+        <var-step>重置成功</var-step>
+      </var-steps>
     </div>
 
-    <div v-if="active===1">
-      <var-input placeholder="电话号码" :line="false" disabled v-model="phone"/>
+    <div id="input-wrap">
+      <div v-if="active===0">
+        <phone v-model:phone="phone"/>
+        <msg-code v-model:code="code" method="reset_password" :phone="phone"/>
+      </div>
+
+      <div v-if="active===1">
+        <var-input placeholder="电话号码" :line="false" disabled v-model="phone"/>
+        <br>
+        <password placeholder="新密码" v-model:password="password"/>
+        <password placeholder="确认密码" v-model:password="confirm_password" :confirm="password"/>
+      </div>
+
+      <div v-if="active===2">
+        <var-icon id="success" size="100px" color="green" name="check-circle-outline"/>
+        <div style="text-align: center">修改完成，{{t}}秒后跳转到登陆页</div>
+      </div>
+
       <br>
-      <password placeholder="新密码" v-model:password="password"/>
-      <password placeholder="确认密码" v-model:password="confirm_password" :confirm="password"/>
+      <var-button v-if="active<2" type="primary" block @click="next">下一步</var-button>
     </div>
-
-    <div v-if="active===2">
-      <var-icon id="success" size="100px" color="green" name="check-circle-outline"/>
-      <div style="text-align: center">修改完成，{{t}}秒后跳转到登陆页</div>
-    </div>
-
-    <br>
-    <var-button v-if="active<2" type="primary" block @click="next">下一步</var-button>
   </div>
 </template>
 
@@ -69,7 +86,7 @@
             this.reset_password()
             let inter = setInterval(() => {
               if (this.t === 1) {
-                this.$router.push({path: "/login", query: {next: this.$route.query.next}})
+                this.$router.push({path: "/user/login", query: {next: this.$route.query.next}})
                 clearInterval(inter)
               }
               this.t--
@@ -140,60 +157,54 @@
 
 <style scoped>
   @media screen and (min-width: 840px) {
-    #app-bar {
+    #pe-nav-bar {
       display: none;
-    }
-
-    #banner {
-      width: 100vw;
-      height: 8vw;
-      background-image: linear-gradient(to top, rgba(255, 255, 255, .8), rgba(255, 255, 255, 0)), url(https://cp-1304907527.cos.ap-nanjing.myqcloud.com/static/banner.jpg);
-      background-size: cover;
-      z-index: -1;
     }
 
     #wrap {
-      width: 50vw;
-      margin: 20px 25vw 0;
+      width: 400px;
+      margin: 0 auto;
     }
 
-    #to-login {
-      cursor: pointer;
-      color: #3a7afe;
+
+    #logo {
+      width: 100px;
+      height: 100px;
+      margin: 50px auto 30px;
     }
 
     #step-wrap {
-      width: 500px;
-      margin: 30px calc(50vw - 250px);
+      padding: 20px 0;
     }
 
     #input-wrap {
-      width: 400px;
-      margin: 10px calc(50vw - 200px);
+      padding: 30px;
     }
 
     #success {
-      margin: 30px 150px;
+      margin: 30px 120px 50px;
     }
-
   }
 
   @media screen and (max-width: 840px) {
-    #banner, #wrap {
-      display: none;
-    }
-
-    #step-wrap {
-      margin: 20px 5vw;
+    #pe-nav-bar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
     }
 
     #input-wrap {
-      width: 70vw;
-      margin: 10px 15vw;
+      margin: 20px 30px;
+    }
+
+    #logo {
+      width: 100px;
+      margin: 20px auto;
     }
 
     #success {
-      margin: 30px calc(35vw - 50px);
+      margin: 20px calc(50% - 50px);
     }
   }
 </style>
