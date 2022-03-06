@@ -3,24 +3,21 @@ import HomeWrap from "views/home/HomeWrap";
 import HomePage from "views/home/HomePage";
 
 const routes = [
-  {
-    path: "",
-    redirect: "/home",
-  },
+  {path: "", redirect: "/home",},
 
   {
     path: "/home",
     component: HomeWrap,
     children: [
       {
-        path: "",
+        path: "/",
         meta: {
           title: "首页",
         },
         component: HomePage,
       },
       {
-        path: "404",
+        path: "/home/404",
         meta: {
           title: "页面不见了",
         },
@@ -33,30 +30,64 @@ const routes = [
     path: "/user",
     component: () => import("views/user/UserWrap"),
     children: [
+      {path: "", redirect: "/user/user-info",},
+
       {
-        path: "",
-        meta: {
-          title: "用户信息",
-          auth: true
-        },
-        component: () => import("views/user/UserInfo"),
+        path: "/user/user-info",
+        component: () => import("views/user/userInfo/UserInfoWrap"),
+        children: [
+          {path: "", redirect: "/user/user-info/profile",},
+          {
+            path: "/user/user-info/profile",
+            meta: {
+              title: "用户信息",
+              auth: true
+            },
+            component: () => import("views/user/userInfo/Profile"),
+          },
+          {
+            path: "/user/user-info/article",
+            meta: {
+              title: "我的文章",
+              auth: true
+            },
+            component: () => import("views/user/userInfo/Article"),
+          },
+          {
+            path: "/user/user-info/comment",
+            meta: {
+              title: "我的评论",
+              auth: true
+            },
+            component: () => import("views/user/userInfo/Comment"),
+          },
+          {
+            path: "/user/user-info/favorite",
+            meta: {
+              title: "我的收藏",
+              auth: true
+            },
+            component: () => import("views/user/userInfo/Favorite"),
+          },
+        ]
       },
+
       {
-        path: "login",
+        path: "/user/login",
         meta: {
           title: "登录",
         },
         component: () => import("views/user/Login"),
       },
       {
-        path: "reset-password",
+        path: "/user/reset-password",
         meta: {
           title: "重置密码",
         },
         component: () => import("views/user/ResetPassword"),
       },
       {
-        path: "change-password",
+        path: "/user/change-password",
         meta: {
           title: "修改密码",
           auth: true
@@ -66,10 +97,7 @@ const routes = [
     ]
   },
 
-  {
-    path: '/:pathMatch(.*)',
-    redirect: "/home/404"
-  }
+  {path: '/:pathMatch(.*)', redirect: "/home/404"}
 ]
 
 const router = createRouter({

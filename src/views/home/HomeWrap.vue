@@ -22,12 +22,16 @@
       width: 56%;
       margin: 0 auto;
       padding: 64px 0;
+      min-height: 120vh;
+
     }
   }
 
   @media screen and (max-width: 840px) {
     #content {
       padding: 98px 0 0;
+      min-height: 120vh;
+
     }
   }
 </style>

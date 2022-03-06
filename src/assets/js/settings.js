@@ -1,6 +1,6 @@
 let cos_url = "https://sc-1304907527.cos.ap-nanjing.myqcloud.com/"
-let api_url = "https://api.silicom.seutools.com/"
-// let api_url = "http://127.0.0.1:8000/"
+// let api_url = "https://api.silicom.seutools.com/"
+let api_url = "http://127.0.0.1:8000/"
 
 
 let re_pattens = {
@@ -48,6 +48,17 @@ let validators = {
     v => re_pattens.article.test(v) || "文章内容2000字以内"
   ]
 }
+
+function rank(experience) {
+  if (experience < 50) return {level: 0, experience, total: 50}
+  if (experience < 120) return {level: 1, experience, total: 120}
+  if (experience < 300) return {level: 2, experience, total: 300}
+  if (experience < 800) return {level: 3, experience, total: 800}
+  if (experience < 2000) return {level: 4, experience, total: 2000}
+  if (experience < 5000) return {level: 5, experience, total: 5000}
+  return {level: 6, experience, total: "--"}
+}
+
 export {
   api_url
 }
@@ -56,5 +67,6 @@ export default {
   cos_url,
   api_url,
   validators,
-  re_pattens
+  re_pattens,
+  rank,
 }

@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view v-if="this.$store.state.is_init"/>
   <div class="background"/>
   <var-back-top bottom="60px" :duration="300"/>
 </template>
